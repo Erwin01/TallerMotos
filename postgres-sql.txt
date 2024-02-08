@@ -1,0 +1,119 @@
+ve por el comando sql ( no se olvide copie e pege y compilelo).
+
+crear base de datos
+----------------------------
+CREATE DATABASE empresas
+  WITH OWNER = postgres
+
+crear tablas
+---------------------
+categoria
+-----------------
+CREATE TABLE categoria
+(
+  
+cod_catg character varying NOT NULL,
+ 
+ categoria_t character varying(50) NOT NULL,
+  
+CONSTRAINT codig_catg PRIMARY KEY (cod_catg)
+)
+...........................
+cliente de taller
+-------------------
+CREATE TABLE clients_tall
+(
+  
+cod_client integer NOT NULL,
+ 
+ nombre_persona character varying(100) NOT NULL,
+  
+cedula character varying(100) NOT NULL,
+  
+celular character varying(100) NOT NULL,
+  
+CONSTRAINT cod_client PRIMARY KEY (cod_client)
+)
+.........................................
+cliente de ventas
+---------------------
+CREATE TABLE clients_vent
+(
+  
+cod_client integer NOT NULL,
+  
+nombre_persona character varying(100) NOT NULL,
+  
+cedula character varying(100) NOT NULL,
+  
+CONSTRAINT cod_client_vent PRIMARY KEY (cod_client)
+)
+........................................
+facturas
+-------------
+CREATE TABLE facturas
+(
+  
+no_fact integer NOT NULL,
+  
+cliente integer NOT NULL,
+  
+fecha date NOT NULL,
+  
+impuesto money NOT NULL,
+  
+total_fact money NOT NULL,
+  
+CONSTRAINT cod_fact PRIMARY KEY (no_fact)
+)
+....................................
+mantenimiento
+-----------------------
+CREATE TABLE mantenimiento
+(
+  
+descripcion character varying(50),
+  
+costo money,
+  fecha date,
+  
+modelo character varying(60),
+  
+cliente integer,
+  
+cod_mant serial NOT NULL
+)
+.....................................
+productos
+-------------------
+CREATE TABLE producto
+(
+  cod_product integer NOT NULL,
+  nombre character varying(50) NOT NULL,
+  categorias character varying(50) NOT NULL,
+  valor integer,
+  fecha date,
+  CONSTRAINT cod_products PRIMARY KEY (cod_product),
+  CONSTRAINT cod_product_fk FOREIGN KEY (categorias)
+      REFERENCES categoria (cod_catg) MATCH FULL
+      ON UPDATE CASCADE ON DELETE RESTRICT
+)
+..............................
+ventas
+--------------------
+CREATE TABLE ventas
+
+(
+  
+cod_vent integer NOT NULL,
+  
+cod_product integer NOT NULL,
+  
+cant numeric NOT NULL,
+  
+factura integer NOT NULL,
+  
+total money,
+  
+CONSTRAINT cod_ventas PRIMARY KEY (cod_vent)
+)
